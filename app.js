@@ -1,7 +1,21 @@
 const request = require("request");
+const yargs = require("yargs");
+
+const argv = yargs.options({
+			 a: {
+			 	demand: true,
+			 	alias: 'address',
+			 	describe: "Address to fetch weathe for",
+			 	string: true
+			 }
+}).help()
+  .alias("help", "h")
+  .argv;
+
+var encodedAddress = encodeURIComponent(argv.address);
 
 request({
-	url: "https://www.google.com.hk/maps/api/geocode/json?address=%20hongkong",
+	url: `https://www.google.com.hk/maps/api/geocode/json?address=${encodedAddress}`,
 	json: true
 }, (error, response, body)=>{
 	// console.log(JSON.stringify(response, undefined, 2));
